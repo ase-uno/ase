@@ -99,7 +99,7 @@ public class JsonConverter {
         String matched = matcher.group(1);
         index += matched.length() + 2;
 
-        return new JsonString(matched.replace("\\\"", "\""));
+        return new JsonString(matched.replace("\\\"", "\"").replace("\\\\", "\\"));
     }
 
     private JsonNull parseNull(String json) throws JsonConvertException {

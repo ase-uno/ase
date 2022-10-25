@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.server;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.ConnectionInstance;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonConverter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonElement;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonString;
@@ -22,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-public class Server {
+public class Server extends ConnectionInstance {
 
     private Game game;
 
@@ -32,12 +34,16 @@ public class Server {
     private boolean isServerSearchingForInput = true;
     private final List<SocketNameCombination> connections = new ArrayList<>();
 
+    private final ConsoleOut console;
 
-    public Server(String localName) throws IOException {
+    public Server(String localName, ConsoleOut console) throws IOException {
+        super(localName);
+        this.console = console;
+
         startServer();
 
         initCards();
-        initPlayers(localName);
+        initPlayers();
         initGame();
         game.start();
         closeServer();
@@ -54,9 +60,11 @@ public class Server {
         return new CardStack(playerCards);
     }
 
-    private void initPlayers(String localName) {
+    private void initPlayers() {
         players = new ArrayList<>();
-        players.add(new PlayerWithConnection(new Player(localName, getPlayerCards()), new ConsolePlayerConnection()));
+        players.add(new PlayerWithConnection(
+                new Player(getLocalName(), getPlayerCards()),
+                new ConsolePlayerConnection(this.console)));
         for(SocketNameCombination snc : connections) {
             Player p = new Player(snc.getName(), getPlayerCards());
             PlayerWithConnection pwc = new PlayerWithConnection(p, new SocketPlayerConnection(snc.getSocket()));
@@ -76,7 +84,7 @@ public class Server {
 
     private void startServer() throws IOException {
 
-        System.out.println("Waiting for players");
+        console.println("Waiting for players");
         serverSocket = new ServerSocket(9999);
 
         Thread thread = new Thread(() -> {
@@ -89,20 +97,20 @@ public class Server {
                     }
                     String name = readName(socket);
                     connections.add(new SocketNameCombination(socket, name));
-                    System.out.println("Player " + name + " connected");
+                    console.println("Player " + name + " connected");
                 } catch (IOException e) {
-                    System.err.println("Error in Socket connection loop");
+                    console.error("Error in Socket connection loop");
                 }
             }
         });
         thread.start();
 
-        System.out.println("Press Enter to proceed");
+        console.println("Press Enter to proceed");
         Scanner scanner = new Scanner(System.in);
         while(connections.isEmpty()) {
             scanner.nextLine();
             if(connections.isEmpty()) {
-                System.out.println("No players connected yet, not starting...");
+                console.error("No players connected yet, not starting...");
             }
         }
         isServerSearchingForInput = false;

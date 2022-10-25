@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.client.plugins;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardStackMapper;
@@ -18,10 +20,17 @@ import java.net.Socket;
 public class SocketConnection {
 
     private final PlayerConnection playerConnection;
+    private final ConsoleOut console;
     private Socket socket;
 
-    public SocketConnection(String ip, String name, PlayerConnection playerConnection) throws IOException {
+    public SocketConnection(
+            String ip,
+            String name,
+            PlayerConnection playerConnection,
+            ConsoleOut console) throws IOException {
         this.playerConnection = playerConnection;
+        this.console = console;
+
         connect(ip, name);
 
         while(socket.isConnected()) {
@@ -33,6 +42,7 @@ public class SocketConnection {
     private void connect(String ip, String name) throws IOException {
         socket = new Socket(ip, 9999);
         returnValue(new JsonString(name));
+        console.println(ConsoleColor.GREEN, "Connected");
     }
 
     private void waitForMessage() throws IOException {
@@ -41,7 +51,7 @@ public class SocketConnection {
         try {
             parseMessage(message);
         } catch (Exception e) {
-            System.err.println("Exception on parsing Server message");
+            console.error("Exception on parsing Server message");
             e.printStackTrace();
         }
     }
@@ -74,7 +84,7 @@ public class SocketConnection {
                 PlayerDTO playerDTO = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
                 playerConnection.broadcastActivePlayer(playerDTO);
             }
-            default -> System.err.println("Error, invalid message received from Server");
+            default -> console.error("Error, invalid message received from Server");
         }
     }
 
@@ -83,7 +93,7 @@ public class SocketConnection {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF(jsonElement.toJson());
         } catch (Exception e) {
-            System.err.println("Exception on returning Server message");
+            console.error("Exception on returning Server message");
             e.printStackTrace();
         }
     }

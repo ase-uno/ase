@@ -9,7 +9,7 @@ public class JsonString extends JsonElement {
     }
 
     public String getValue() {
-        return value.replace("\\\"", "\"").replace("\\\\", "\\");
+        return value;
     }
 
     @Override

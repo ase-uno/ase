@@ -39,11 +39,11 @@ public class Game {
 
     public void next() {
         Card card;
-        int nextPlayerOffset = 1;
         do {
             card = getActivePlayer().input(activeCard);
         } while(card != null && !activeCard.isCompatibleWith(card));
 
+        int nextPlayerOffset = 1;
         Card nextNewCard = card;
 
         if(card != null) {

@@ -21,6 +21,7 @@ import java.util.HashMap;
 public class SocketPlayerConnection implements PlayerConnection {
 
     private static final String ACTION = "action";
+    private static final String DATA = "data";
 
     private final Socket socket;
 
@@ -38,7 +39,7 @@ public class SocketPlayerConnection implements PlayerConnection {
 
         HashMap<String, JsonElement> request = new HashMap<>();
         request.put(ACTION, new JsonString("input"));
-        request.put("data", new JsonObject(data));
+        request.put(DATA, new JsonObject(data));
 
         JsonObject jsonObject = new JsonObject(request);
 
@@ -48,8 +49,8 @@ public class SocketPlayerConnection implements PlayerConnection {
 
             DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
             String response = dataInputStream.readUTF();
-            JsonObject jsonResponse = (JsonObject) new JsonConverter().fromJson(response);
-           return CardMapper.cardFromJson(jsonResponse);
+            JsonElement jsonElement = new JsonConverter().fromJson(response);
+           return CardMapper.cardFromJson(jsonElement);
         } catch (Exception e) {
             return null;
         }
@@ -92,7 +93,7 @@ public class SocketPlayerConnection implements PlayerConnection {
 
         HashMap<String, JsonElement> request = new HashMap<>();
         request.put(ACTION, new JsonString(action));
-        request.put("data", new JsonObject(data));
+        request.put(DATA, new JsonObject(data));
 
         JsonObject jsonObject = new JsonObject(request);
 
