@@ -6,7 +6,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonConverter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonElement;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonString;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.server.game.Game;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.PlayerWithConnection;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerWithConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Player;

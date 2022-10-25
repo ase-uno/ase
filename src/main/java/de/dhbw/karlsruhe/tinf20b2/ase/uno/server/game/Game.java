@@ -1,7 +1,7 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.server.game;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.PlayerMapper;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.PlayerWithConnection;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerWithConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 
 import java.util.List;

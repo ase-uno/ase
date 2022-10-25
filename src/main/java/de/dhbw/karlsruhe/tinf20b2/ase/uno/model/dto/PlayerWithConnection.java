@@ -1,5 +1,6 @@
-package de.dhbw.karlsruhe.tinf20b2.ase.uno.model;
+package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.PlayerConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Player;
 
