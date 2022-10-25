@@ -1,6 +1,5 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.client;
 
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.client.plugins.SocketConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.ConnectionInstance;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.ConsolePlayerConnection;

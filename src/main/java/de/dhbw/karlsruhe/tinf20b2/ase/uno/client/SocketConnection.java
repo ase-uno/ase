@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.tinf20b2.ase.uno.client.plugins;
+package de.dhbw.karlsruhe.tinf20b2.ase.uno.client;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
