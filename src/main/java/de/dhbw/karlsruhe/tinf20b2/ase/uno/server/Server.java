@@ -1,5 +1,6 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.server;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.CardProvider;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.ConnectionInstance;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonConverter;
@@ -11,7 +12,6 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Player;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SocketNameCombination;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.CardGenerator;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.ConsolePlayerConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.SocketPlayerConnection;
 
@@ -35,10 +35,12 @@ public class Server extends ConnectionInstance {
     private final List<SocketNameCombination> connections = new ArrayList<>();
 
     private final ConsoleOut console;
+    private final CardProvider cardProvider;
 
-    public Server(String localName, ConsoleOut console) throws IOException {
+    public Server(String localName, ConsoleOut console, CardProvider cardProvider) throws IOException {
         super(localName);
         this.console = console;
+        this.cardProvider = cardProvider;
 
         startServer();
 
@@ -50,7 +52,7 @@ public class Server extends ConnectionInstance {
     }
 
     private void initCards() {
-        cards = new CardGenerator().listAllCards();
+        cards = cardProvider.listAllCards();
         Collections.shuffle(cards);
     }
 

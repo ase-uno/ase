@@ -1,4 +1,7 @@
-package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console;
+package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins;
+
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 
 public class ConsoleAdapter implements ConsoleOut {
 

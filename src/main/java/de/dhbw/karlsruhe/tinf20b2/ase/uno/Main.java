@@ -1,7 +1,8 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.client.Client;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleAdapter;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.CardGenerator;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.ConsoleAdapter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.server.Server;
@@ -64,7 +65,7 @@ public class Main {
     private static void start(String name, int mode) throws IOException {
 
         if(mode == 0) {
-            new Server(name, console);
+            new Server(name, console, new CardGenerator());
         } else {
             new Client(name, console);
         }

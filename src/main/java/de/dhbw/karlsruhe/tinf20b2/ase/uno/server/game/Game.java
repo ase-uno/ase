@@ -16,6 +16,7 @@ public class Game {
     private int activeIndex = 0;
     private int direction = 1;
 
+
     public Game(List<PlayerWithConnection> players, CardStack cardStack, Card activeCard) {
         this.players = players;
         this.cardStack = cardStack;

@@ -1,13 +1,15 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.CardProvider;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardGenerator {
+public class CardGenerator implements CardProvider {
 
 
+    @Override
     public List<Card> listAllCards() {
 
         List<Card> cards = new ArrayList<>();
