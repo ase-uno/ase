@@ -11,7 +11,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerDTO;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -77,16 +77,16 @@ public class SocketPlayerConnection implements PlayerConnection {
     }
 
     @Override
-    public void broadcastWinner(PlayerDTO winner) {
+    public void broadcastWinner(SimplePlayer winner) {
         broadcastPlayer("broadcastWinner", winner);
     }
 
     @Override
-    public void broadcastActivePlayer(PlayerDTO player) {
+    public void broadcastActivePlayer(SimplePlayer player) {
         broadcastPlayer("broadcastActivePlayer", player);
     }
 
-    private void broadcastPlayer(String action, PlayerDTO player) {
+    private void broadcastPlayer(String action, SimplePlayer player) {
         HashMap<String, JsonElement> data = new HashMap<>();
         data.put("player", PlayerMapper.playerDTOToJson(player));
 

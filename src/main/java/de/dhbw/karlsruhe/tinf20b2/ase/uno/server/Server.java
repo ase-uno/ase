@@ -3,6 +3,7 @@ package de.dhbw.karlsruhe.tinf20b2.ase.uno.server;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.CardProvider;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.ConnectionInstance;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.AbstractStorageRepository;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonConverter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonElement;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonString;
@@ -37,10 +38,16 @@ public class Server extends ConnectionInstance {
     private final ConsoleOut console;
     private final CardProvider cardProvider;
 
-    public Server(String localName, ConsoleOut console, CardProvider cardProvider) throws IOException {
+    private final AbstractStorageRepository abstractStorageRepository;
+
+    public Server(String localName,
+                  ConsoleOut console,
+                  CardProvider cardProvider,
+                  AbstractStorageRepository abstractStorageRepository) throws IOException {
         super(localName);
         this.console = console;
         this.cardProvider = cardProvider;
+        this.abstractStorageRepository = abstractStorageRepository;
 
         startServer();
 
@@ -81,7 +88,7 @@ public class Server extends ConnectionInstance {
             activeCard = cards.get(++i);
         } while(activeCard.hasAction());
         cards.remove(i);
-        game = new Game(players, new CardStack(cards), activeCard);
+        game = new Game(players, new CardStack(cards), activeCard, new HighScoreStorage(abstractStorageRepository));
     }
 
     private void startServer() throws IOException {
@@ -101,7 +108,9 @@ public class Server extends ConnectionInstance {
                     connections.add(new SocketNameCombination(socket, name));
                     console.println("Player " + name + " connected");
                 } catch (IOException e) {
-                    console.error("Error in Socket connection loop");
+                    if(isServerSearchingForInput) {
+                        console.error("Error in Socket connection loop");
+                    }
                 }
             }
         });

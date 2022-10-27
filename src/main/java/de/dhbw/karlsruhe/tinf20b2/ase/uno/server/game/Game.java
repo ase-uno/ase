@@ -3,6 +3,7 @@ package de.dhbw.karlsruhe.tinf20b2.ase.uno.server.game;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.PlayerMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerWithConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.HighScoreStorageRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +16,18 @@ public class Game {
     private Card activeCard;
     private int activeIndex = 0;
     private int direction = 1;
+    private final HighScoreStorageRepository highScoreStorageRepository;
 
 
-    public Game(List<PlayerWithConnection> players, CardStack cardStack, Card activeCard) {
+    public Game(
+            List<PlayerWithConnection> players,
+            CardStack cardStack,
+            Card activeCard,
+            HighScoreStorageRepository highScoreStorageRepository) {
         this.players = players;
         this.cardStack = cardStack;
         this.activeCard = activeCard;
+        this.highScoreStorageRepository = highScoreStorageRepository;
     }
 
     public void start() {
@@ -29,6 +36,7 @@ public class Game {
             next();
         }
         Player winner = getWinner();
+        highScoreStorageRepository.addWin(PlayerMapper.playerToPlayerDTO(winner));
         broadcastWinner(winner);
     }
 

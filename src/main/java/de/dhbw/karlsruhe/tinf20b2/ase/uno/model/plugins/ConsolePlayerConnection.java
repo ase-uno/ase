@@ -5,7 +5,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerDTO;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.util.Scanner;
 
@@ -78,7 +78,7 @@ public class ConsolePlayerConnection implements PlayerConnection {
     }
 
     @Override
-    public void broadcastWinner(PlayerDTO winner) {
+    public void broadcastWinner(SimplePlayer winner) {
         if(winner == null) {
             console.println("Tie");
         } else {
@@ -87,7 +87,7 @@ public class ConsolePlayerConnection implements PlayerConnection {
     }
 
     @Override
-    public void broadcastActivePlayer(PlayerDTO player) {
+    public void broadcastActivePlayer(SimplePlayer player) {
         console.println("Now playing: " + player.getName());
     }
 }

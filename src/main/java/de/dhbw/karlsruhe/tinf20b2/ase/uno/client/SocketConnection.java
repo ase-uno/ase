@@ -10,7 +10,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerDTO;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -76,13 +76,13 @@ public class SocketConnection {
             }
             case "broadcastWinner" -> {
                 JsonObject jsonObject1 = (JsonObject) element;
-                PlayerDTO playerDTO = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
-                playerConnection.broadcastWinner(playerDTO);
+                SimplePlayer simplePlayer = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
+                playerConnection.broadcastWinner(simplePlayer);
             }
             case "broadcastActivePlayer" -> {
                 JsonObject jsonObject1 = (JsonObject) element;
-                PlayerDTO playerDTO = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
-                playerConnection.broadcastActivePlayer(playerDTO);
+                SimplePlayer simplePlayer = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
+                playerConnection.broadcastActivePlayer(simplePlayer);
             }
             default -> console.error("Error, invalid message received from Server");
         }

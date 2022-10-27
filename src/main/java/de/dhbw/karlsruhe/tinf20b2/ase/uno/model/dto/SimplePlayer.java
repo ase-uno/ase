@@ -1,10 +1,10 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto;
 
-public class PlayerDTO {
+public class SimplePlayer {
 
     private final String name;
 
-    public PlayerDTO(String name) {
+    public SimplePlayer(String name) {
         this.name = name;
     }
 

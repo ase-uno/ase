@@ -4,7 +4,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerDTO;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.util.Random;
 
@@ -38,12 +38,12 @@ public class NPCPlayerConnection implements PlayerConnection {
     }
 
     @Override
-    public void broadcastWinner(PlayerDTO winner) {
+    public void broadcastWinner(SimplePlayer winner) {
         //only for testing, so no broadcast ist needed
     }
 
     @Override
-    public void broadcastActivePlayer(PlayerDTO player) {
+    public void broadcastActivePlayer(SimplePlayer player) {
         //only for testing, so no broadcast ist needed
     }
 

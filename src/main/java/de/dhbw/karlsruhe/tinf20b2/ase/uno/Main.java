@@ -5,6 +5,7 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.CardGenerator;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins.ConsoleAdapter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.FileStorage;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.server.Server;
 
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class Main {
     private static void start(String name, int mode) throws IOException {
 
         if(mode == 0) {
-            new Server(name, console, new CardGenerator());
+            new Server(name, console, new CardGenerator(), new FileStorage());
         } else {
             new Client(name, console);
         }
