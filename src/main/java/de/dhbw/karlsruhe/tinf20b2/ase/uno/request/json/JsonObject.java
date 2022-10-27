@@ -17,6 +17,10 @@ public class JsonObject extends JsonElement {
         this.elements = elements;
     }
 
+    public Map<String, JsonElement> getElements() {
+        return elements;
+    }
+
     public JsonElement get(String key) {
         return elements.getOrDefault(key, null);
     }

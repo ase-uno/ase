@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins;
 
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.HighScoreMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonConverter;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonElement;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonObject;
@@ -8,10 +10,6 @@ import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardStackMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.PlayerMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -86,6 +84,19 @@ public class SocketPlayerConnection implements PlayerConnection {
         broadcastPlayer("broadcastActivePlayer", player);
     }
 
+    @Override
+    public void broadcastHighScore(HighScore highScore) {
+
+        HashMap<String, JsonElement> data = new HashMap<>();
+        data.put("highScore", HighScoreMapper.highScoreToJson(highScore));
+
+        HashMap<String, JsonElement> request = new HashMap<>();
+        request.put(ACTION, new JsonString("broadcastHighScore"));
+        request.put(DATA, new JsonObject(data));
+
+        broadcastMessage(new JsonObject(request));
+    }
+
     private void broadcastPlayer(String action, SimplePlayer player) {
         HashMap<String, JsonElement> data = new HashMap<>();
         data.put("player", PlayerMapper.playerDTOToJson(player));
@@ -95,8 +106,10 @@ public class SocketPlayerConnection implements PlayerConnection {
         request.put(ACTION, new JsonString(action));
         request.put(DATA, new JsonObject(data));
 
-        JsonObject jsonObject = new JsonObject(request);
+        broadcastMessage(new JsonObject(request));
+    }
 
+    private void broadcastMessage(JsonObject jsonObject) {
         try {
             DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
             dataOutputStream.writeUTF(jsonObject.toJson());

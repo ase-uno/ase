@@ -2,15 +2,13 @@ package de.dhbw.karlsruhe.tinf20b2.ase.uno.client;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.HighScoreMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.CardStackMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.PlayerMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -83,6 +81,11 @@ public class SocketConnection {
                 JsonObject jsonObject1 = (JsonObject) element;
                 SimplePlayer simplePlayer = PlayerMapper.playerDTOFromJson(jsonObject1.get("player"));
                 playerConnection.broadcastActivePlayer(simplePlayer);
+            }
+            case "broadcastHighScore" -> {
+                JsonObject jsonObject1 = (JsonObject) element;
+                HighScore highScore = HighScoreMapper.highScoreFromJson(jsonObject1.get("highScore"));
+                playerConnection.broadcastHighScore(highScore);
             }
             default -> console.error("Error, invalid message received from Server");
         }

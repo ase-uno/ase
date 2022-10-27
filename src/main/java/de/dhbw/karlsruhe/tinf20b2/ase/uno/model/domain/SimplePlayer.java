@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto;
+package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain;
 
 public class SimplePlayer {
 

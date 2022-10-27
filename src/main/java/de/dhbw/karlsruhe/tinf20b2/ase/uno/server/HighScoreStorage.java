@@ -1,6 +1,8 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.server;
 
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.HighScore;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.SimplePlayer;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.HighScoreMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.AbstractStorageRepository;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.HighScoreStorageRepository;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.*;
@@ -30,10 +32,10 @@ public class HighScoreStorage implements HighScoreStorageRepository {
     }
 
     @Override
-    public int getWins(SimplePlayer player) {
+    public HighScore getHighScore() {
 
         JsonObject jsonObject = getHighScoreFile();
-        return getWins(jsonObject, player);
+        return HighScoreMapper.highScoreFromJson(jsonObject);
 
     }
 

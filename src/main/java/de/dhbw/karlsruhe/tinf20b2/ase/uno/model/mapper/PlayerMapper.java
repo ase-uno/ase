@@ -3,8 +3,7 @@ package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonElement;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonObject;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json.JsonString;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Player;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.SimplePlayer;
 
 import java.util.HashMap;
 
@@ -27,10 +26,6 @@ public class PlayerMapper {
         String name = ((JsonString) jsonObject.get(PLAYERDTO_NAME)).getValue();
 
         return new SimplePlayer(name);
-    }
-
-    public static SimplePlayer playerToPlayerDTO(Player player) {
-        return new SimplePlayer(player.getName());
     }
 
 }

@@ -1,10 +1,7 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 
 import java.util.Random;
 
@@ -47,5 +44,8 @@ public class NPCPlayerConnection implements PlayerConnection {
         //only for testing, so no broadcast ist needed
     }
 
-
+    @Override
+    public void broadcastHighScore(HighScore highScore) {
+        //only for testing, so no broadcast ist needed
+    }
 }

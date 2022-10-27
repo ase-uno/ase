@@ -1,6 +1,5 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.server.game;
 
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.mapper.PlayerMapper;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.PlayerWithConnection;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.persistance.HighScoreStorageRepository;
@@ -36,13 +35,20 @@ public class Game {
             next();
         }
         Player winner = getWinner();
-        highScoreStorageRepository.addWin(PlayerMapper.playerToPlayerDTO(winner));
+        highScoreStorageRepository.addWin(winner);
         broadcastWinner(winner);
+        broadcastHighScore();
+    }
+
+    private void broadcastHighScore() {
+        for(PlayerWithConnection p : players) {
+            p.getPlayerConnection().broadcastHighScore(highScoreStorageRepository.getHighScore());
+        }
     }
 
     private void broadcastActivePlayer(Player activePlayer) {
         for(PlayerWithConnection p : players) {
-            p.getPlayerConnection().broadcastActivePlayer(PlayerMapper.playerToPlayerDTO(activePlayer));
+            p.getPlayerConnection().broadcastActivePlayer(activePlayer);
         }
     }
 
@@ -119,7 +125,7 @@ public class Game {
 
     private void broadcastWinner(Player winner) {
         for(PlayerWithConnection player : players) {
-            player.getPlayerConnection().broadcastWinner(PlayerMapper.playerToPlayerDTO(winner));
+            player.getPlayerConnection().broadcastWinner(winner);
         }
     }
 

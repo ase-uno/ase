@@ -1,9 +1,6 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model;
 
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.Card;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardColor;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.CardStack;
-import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.dto.SimplePlayer;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 
 public interface PlayerConnection {
 
@@ -13,5 +10,7 @@ public interface PlayerConnection {
     void broadcastWinner(SimplePlayer winner);
 
     void broadcastActivePlayer(SimplePlayer player);
+
+    void broadcastHighScore(HighScore highScore);
 
 }
