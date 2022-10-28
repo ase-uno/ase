@@ -1,9 +1,14 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.model.plugins;
 
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.*;
+import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleColor;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.console.ConsoleOut;
 import de.dhbw.karlsruhe.tinf20b2.ase.uno.model.domain.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class ConsolePlayerConnection implements PlayerConnection {
@@ -20,7 +25,7 @@ public class ConsolePlayerConnection implements PlayerConnection {
         console.println("Input card: ");
         console.println();
         console.println("Active: ");
-        console.println(cardToString(active));
+        printCard(active);
         console.println();
 
         for(int i = 0; i<cardStack.getCardList().size(); i++) {
@@ -49,6 +54,62 @@ public class ConsolePlayerConnection implements PlayerConnection {
         if(card.getCardNumber() != null) number = card.getCardNumber().getNumber();
         if(card.getColor() != null) color = card.getColor().getName();
         return "color=" + color + ", cardNumber=" + number + ", action=" + card.getAction();
+    }
+
+    private void printCard(Card card) {
+        String filePath = getFilePathForCard(card);
+        System.out.println(filePath);
+        ConsoleColor color = cardColorToConsoleColor(card.getColor());
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(filePath);
+        if(inputStream == null) {
+            console.println(cardToString(card));
+            return;
+        }
+        InputStreamReader streamReader = new InputStreamReader(inputStream);
+
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
+        try {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                console.println(color, line);
+            }
+        } catch (IOException e) {
+            console.println(cardToString(card));
+        }
+    }
+
+    private String getFilePathForCard(Card card) {
+
+        String path = "";
+
+        if(card.getCardNumber() != null) {
+            path += "numbers/" + card.getCardNumber().getNumber() + ".txt";
+        } else if(card.hasAction()) {
+            path += "actions/";
+            String actionName = card.getAction().getAction().name().toLowerCase();
+            path += actionName;
+            if(card.getAction().getAction() == Action.DRAW) {
+                path += "_" + card.getAction().getDraw();
+            }
+            if(card.getAction().getDraw() > 0 && card.getAction().getAction() != Action.DRAW) {
+                path += "_draw_" + card.getAction().getDraw();
+            }
+            path += ".txt";
+        } else {
+            path += "empty.txt";
+        }
+
+        return "ascii/" + path;
+    }
+
+    private ConsoleColor cardColorToConsoleColor(CardColor color) {
+        return switch (color) {
+            case RED -> ConsoleColor.RED;
+            case YELLOW -> ConsoleColor.YELLOW;
+            case GREEN -> ConsoleColor.GREEN;
+            case BLUE -> ConsoleColor.BLUE;
+        };
     }
 
     @Override
