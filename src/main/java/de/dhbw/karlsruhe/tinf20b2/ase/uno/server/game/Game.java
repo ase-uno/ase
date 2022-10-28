@@ -41,8 +41,13 @@ public class Game {
     }
 
     private void broadcastHighScore() {
+        List<SimplePlayer> simplePlayers = players.stream()
+                .map(pwc -> (SimplePlayer) pwc.getPlayer())
+                .toList();
+        HighScore highScore = highScoreStorageRepository.getHighScore()
+                .filter(simplePlayers);
         for(PlayerWithConnection p : players) {
-            p.getPlayerConnection().broadcastHighScore(highScoreStorageRepository.getHighScore());
+            p.getPlayerConnection().broadcastHighScore(highScore);
         }
     }
 
