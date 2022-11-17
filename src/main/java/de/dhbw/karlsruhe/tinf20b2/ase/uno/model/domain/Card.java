@@ -56,8 +56,9 @@ public class Card {
         boolean numbersEqual = cardNumber != null && getCardNumber().equals(card.getCardNumber());
         boolean hasAction = action != null && action.getAction() == Action.CHANGE_COLOR
             || card.action != null && card.action.getAction() == Action.CHANGE_COLOR;
+        boolean actionsEqual = action != null && getAction().equals(card.getAction());
 
-        return colorsEqual || numbersEqual || hasAction;
+        return colorsEqual || numbersEqual || hasAction || actionsEqual;
     }
 
     @Override
