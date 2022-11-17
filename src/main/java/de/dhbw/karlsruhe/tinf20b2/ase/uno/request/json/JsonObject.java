@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class JsonObject extends JsonElement {
+public class JsonObject implements JsonElement {
 
 
     private final Map<String, JsonElement> elements;

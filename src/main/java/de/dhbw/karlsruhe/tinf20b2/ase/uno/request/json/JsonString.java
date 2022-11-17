@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.tinf20b2.ase.uno.request.json;
 
-public class JsonString extends JsonElement {
+public class JsonString implements JsonElement {
 
     private final String value;
 
